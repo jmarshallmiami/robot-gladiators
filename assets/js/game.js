@@ -38,7 +38,10 @@ var fight = function (enemyName) {
 
         // check enemy's health
         if (enemyHealth <= 0) {
+            // alert if player has won the fight
             window.alert(enemyName + " has died!");
+            // reward for winning the fight
+            playerMoney = playerMoney + 20;
             break;
         }
         else {
@@ -61,25 +64,55 @@ var fight = function (enemyName) {
     }
 };
 
+var startGame = function () {
 
-for (var i = 0; i < enemyNames.length; i++) {
+    // reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    // fight and round logic
+    for (var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+            window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+            // enemy fed into the fight loop and fight occurs
+            var pickedEnemyName = enemyNames[i]
+            enemyHealth = 50;
+            debugger;
+            fight(pickedEnemyName);
+        } else {
+            window.alert("You have lost your robot in battle! Game Over!")
+        }
+    }
+
+    endGame();
+}
+
+var endGame = function () {
     if (playerHealth > 0) {
-        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
-        // enemy fed into the fight loop and fight occurs
-        var pickedEnemyName = enemyNames[i]
-        enemyHealth = 50;
-        debugger;
-        fight(pickedEnemyName);
-    } else {
-        window.alert("You have lost your robot in battle! Game Over!")
+        window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + ".");
+    }
+    else {
+        window.alert("You've lost your robot in battle.");
+    }
+
+    //Ask player if they would like to restart the game 
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+
+    if (playAgainConfirm) {
+        // Restart the game
+        startGame();
+    }
+    else {
+        window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
 }
 
+startGame();
+
+
 // GAME STATES
-// "WIN" - Player robot has defeated all enemy-robots
-// *Fight all enemy-robots
-// *Defeat each enemy-robot
-// "LOSE" - Player robot's health is zero or less
-
-
-// fight(enemyRobot);
+// We need a way to start and restart the game with a prompt at the end of the game once the player has been defeated
+// We can use a function to encompass that restart game logic
+// we have to ask if the player wants to make purchase after win
+// we have to not allow the player to skip a fight in their money is less than 10
