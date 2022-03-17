@@ -1,10 +1,17 @@
+
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max-min + 1) + min);
+    return value;
+}
+
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
+
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"]
-var enemyHealth = randomNumber(40,60)
+var enemyHealth = 40;
 var enemyAttack = 12;
 
 console.log(enemyNames);
@@ -30,8 +37,10 @@ var fight = function (enemyName) {
             }
         }
 
-        // Subtract the value of 'playerAttack' from the value of 'enemyHealth' and update the value in the 'enemyHealth' variable
-        enemyHealth = Math.max(0,enemyHealth - playerAttack);
+        // Subtract the value of randomly generated 'damage' from the value of 'enemyHealth' and update the value in the 'enemyHealth' variable
+        var damage = randomNumber(playerAttack-3, playerAttack)
+
+        enemyHealth = Math.max(0,enemyHealth - damage);
         console.log(
             playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
         );
@@ -46,7 +55,7 @@ var fight = function (enemyName) {
         }
         else {
             window.alert(enemyName + " still has " + enemyHealth + " health left.");
-        }
+        }   
 
         // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
         playerHealth = Math.max(0, playerHealth - enemyAttack);
@@ -78,7 +87,7 @@ var startGame = function () {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             // enemy fed into the fight loop and fight occurs
             var pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            enemyHealth = randomNumber(40,60);
             fight(pickedEnemyName);
             //if we're not at the last enemy in the array
             if (playerHealth > 0 && i < enemyNames.length - 1) {
@@ -157,10 +166,5 @@ var shop = function () {
             break;
     };
 };
-
-var randomNumber = function(min, max) {
-    var value = Math.floor(Math.random() * (max-min + 1) + min);
-    return value;
-}
 
 startGame();
