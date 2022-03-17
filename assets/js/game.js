@@ -4,7 +4,7 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"]
-var enemyHealth = 50;
+var enemyHealth = randomNumber(40,60)
 var enemyAttack = 12;
 
 console.log(enemyNames);
@@ -24,14 +24,14 @@ var fight = function (enemyName) {
 
             if (confirmSkip) {
                 window.alert(playerName + " has decided to skip the fight. Goodbye!");
-                playerMoney = playerMoney - 10;
-                console.log("playerMoney", playerMoney)
+                playerMoney = Math.max(0,playerMoney - 10);
+                console.log("playerMoney", playerMoney);
                 break;
             }
         }
 
         // Subtract the value of 'playerAttack' from the value of 'enemyHealth' and update the value in the 'enemyHealth' variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0,enemyHealth - playerAttack);
         console.log(
             playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
         );
@@ -49,7 +49,8 @@ var fight = function (enemyName) {
         }
 
         // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-        playerHealth = playerHealth - enemyAttack
+        playerHealth = Math.max(0, playerHealth - enemyAttack);
+        
         console.log(
             enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
         );
@@ -76,9 +77,8 @@ var startGame = function () {
         if (playerHealth > 0) {
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
             // enemy fed into the fight loop and fight occurs
-            var pickedEnemyName = enemyNames[i]
+            var pickedEnemyName = enemyNames[i];
             enemyHealth = 50;
-            debugger;
             fight(pickedEnemyName);
             //if we're not at the last enemy in the array
             if (playerHealth > 0 && i < enemyNames.length - 1) {
@@ -89,12 +89,12 @@ var startGame = function () {
                 }
             }
         } else {
-            window.alert("You have lost your robot in battle! Game Over!")
-        }
-    }
+            window.alert("You have lost your robot in battle! Game Over!");
+        };
+    };
 
     endGame();
-}
+};
 
 var endGame = function () {
     if (playerHealth > 0) {
@@ -155,14 +155,12 @@ var shop = function () {
             // call shop() again to force player to pick a valid option
             shop();
             break;
-    }
+    };
 };
 
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max-min + 1) + min);
+    return value;
+}
+
 startGame();
-
-
-// GAME STATES
-// We need a way to start and restart the game with a prompt at the end of the game once the player has been defeated
-// We can use a function to encompass that restart game logic
-// we have to ask if the player wants to make purchase after win
-// we have to not allow the player to skip a fight in their money is less than 10
